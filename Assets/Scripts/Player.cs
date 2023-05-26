@@ -12,9 +12,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         var horizontal = Input.GetAxis("Horizontal");
-
         var rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(horizontal * 10, rb.velocity.y);
+        var vertical = rb.velocity.y;
+
+        if (Input.GetButtonDown("Fire1"))
+            vertical = 5;
+
+        rb.velocity = new Vector2(horizontal * 10, vertical);
 
     }
 }
