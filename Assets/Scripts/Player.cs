@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         var horizontal = Input.GetAxis("Horizontal");
-        var rb = GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
         var vertical = rb.velocity.y;
 
         if (Input.GetButtonDown("Fire1"))
@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time)
             vertical = _jumpVelocity;
 
-        rb.velocity = new Vector2(horizontal * 10, vertical);
-
+        rb.velocity = new Vector2(horizontal, vertical);
     }
 }
