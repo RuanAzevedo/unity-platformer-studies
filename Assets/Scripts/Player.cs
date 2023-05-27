@@ -3,6 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private float _jumpEndTime;
+    [SerializeField] private float _horizontalVelocity = 3;
     [SerializeField] private float _jumpVelocity = 5;
     [SerializeField] private float _jumpDuration = 0.5f;
 
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time)
             vertical = _jumpVelocity;
 
+        horizontal *= _horizontalVelocity;
         rb.velocity = new Vector2(horizontal, vertical);
     }
 }
