@@ -477,7 +477,8 @@ GameObject:
   - component: {fileID: 678315273}
   - component: {fileID: 678315275}
   - component: {fileID: 678315276}
-  m_Layer: 0
+  - component: {fileID: 678315277}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,6 +677,9 @@ MonoBehaviour:
   _jumpVelocity: 5.5
   _jumpDuration: 0.5
   _jumpSprite: {fileID: 21300000, guid: cb07ff956555047449af18333ae3d567, type: 3}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 55
   IsGrounded: 0
 --- !u!95 &678315276
 Animator:
@@ -697,6 +701,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!70 &678315277
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678315270}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.4}
+  m_Size: {x: 1, y: 1.2}
+  m_Direction: 0
 --- !u!1 &680596847
 GameObject:
   m_ObjectHideFlags: 0
