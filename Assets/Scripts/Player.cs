@@ -9,12 +9,14 @@ public class Player : MonoBehaviour
     [SerializeField] Sprite _jumpSprite;
 
     public bool IsGrounded;
-    private SpriteRenderer _spriteRenderer;
-    private Sprite _defaultSprite;
-    private float _horizontal;
+    SpriteRenderer _spriteRenderer;
+    Sprite _defaultSprite;
+    Animator _animator;
+    float _horizontal;
 
-    private void Awake()
+    void Awake()
     {
+        _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _defaultSprite = _spriteRenderer.sprite;
     }
@@ -57,8 +59,8 @@ public class Player : MonoBehaviour
 
     private void UpdateSprite()
     {
-        GetComponent<Animator>().SetBool("IsGrounded", IsGrounded);
-        GetComponent<Animator>().SetFloat("HorizontalSpeed", Mathf.Abs(_horizontal));
+        _animator.SetBool("IsGrounded", IsGrounded);
+        _animator.SetFloat("HorizontalSpeed", Mathf.Abs(_horizontal));
 
         if (_horizontal > 0)
             _spriteRenderer.flipX = false;
