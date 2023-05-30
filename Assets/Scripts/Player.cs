@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     [SerializeField] Sprite _jumpSprite;
     [SerializeField] LayerMask _layerMask;
 
-
     public bool IsGrounded;
     SpriteRenderer _spriteRenderer;
 
@@ -32,30 +31,18 @@ public class Player : MonoBehaviour
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
         // Draw left foot
-        origin = new Vector2(
-            transform.position.x - _footOffset,
-            transform.position.y - spriteRenderer.bounds.extents.y
-        );
+        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
         // Draw right foot
-        origin = new Vector2(
-            transform.position.x + _footOffset,
-            transform.position.y - spriteRenderer.bounds.extents.y
-        );
+        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
-        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
-
-        if (hit.collider)
-            IsGrounded = true;
-        else
-            IsGrounded = false;
+        UpdateGrounding();
 
         _horizontal = Input.GetAxis("Horizontal");
 
@@ -73,7 +60,33 @@ public class Player : MonoBehaviour
         UpdateSprite();
     }
 
-    private void UpdateSprite()
+    void UpdateGrounding()
+    {
+        float positionX = transform.position.x;
+        float positionY = transform.position.y;
+        float spriteRendererExtentsY = _spriteRenderer.bounds.extents.y;
+        IsGrounded = false;
+
+        // check center
+        Vector2 origin = new Vector2(positionX, positionY - spriteRendererExtentsY);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        if (hit.collider)
+            IsGrounded = true;
+
+        // check left
+        origin = new Vector2(positionX - _footOffset, positionY - spriteRendererExtentsY);
+        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        if (hit.collider)
+            IsGrounded = true;
+
+        // check right
+        origin = new Vector2(positionX + _footOffset, positionY - spriteRendererExtentsY);
+        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        if (hit.collider)
+            IsGrounded = true;
+    }
+
+    void UpdateSprite()
     {
         _animator.SetBool("IsGrounded", IsGrounded);
         _animator.SetFloat("HorizontalSpeed", Mathf.Abs(_horizontal));
