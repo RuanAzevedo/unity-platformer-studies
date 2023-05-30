@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -6,15 +9,15 @@ public class Player : MonoBehaviour
     [SerializeField] float _horizontalVelocity = 3;
     [SerializeField] float _jumpVelocity = 5;
     [SerializeField] float _jumpDuration = 0.5f;
-    [SerializeField] float _footOffset = 0.5f;
     [SerializeField] Sprite _jumpSprite;
     [SerializeField] LayerMask _layerMask;
+    [SerializeField] float _footOffset = 0.5f;
 
     public bool IsGrounded;
     SpriteRenderer _spriteRenderer;
-
-    Animator _animator;
     float _horizontal;
+    Animator _animator;
+    int _jumpsRemaining;
 
     void Awake()
     {
@@ -27,15 +30,15 @@ public class Player : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Gizmos.color = Color.red;
 
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
-        // Draw left foot
-        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
+        // Draw Left Foot
+        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
-        // Draw right foot
-        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
+        // Draw Right Foot
+        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
@@ -45,12 +48,15 @@ public class Player : MonoBehaviour
         UpdateGrounding();
 
         _horizontal = Input.GetAxis("Horizontal");
-
+        Debug.Log(_horizontal);
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         var vertical = rb.velocity.y;
 
-        if (Input.GetButtonDown("Fire1") && IsGrounded)
+        if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
+        {
             _jumpEndTime = Time.time + _jumpDuration;
+            _jumpsRemaining--;
+        }
 
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time)
             vertical = _jumpVelocity;
@@ -62,39 +68,38 @@ public class Player : MonoBehaviour
 
     void UpdateGrounding()
     {
-        float positionX = transform.position.x;
-        float positionY = transform.position.y;
-        float spriteRendererExtentsY = _spriteRenderer.bounds.extents.y;
         IsGrounded = false;
 
-        // check center
-        Vector2 origin = new Vector2(positionX, positionY - spriteRendererExtentsY);
+        // Check center
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider)
             IsGrounded = true;
 
-        // check left
-        origin = new Vector2(positionX - _footOffset, positionY - spriteRendererExtentsY);
+        // Check left
+        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider)
             IsGrounded = true;
 
-        // check right
-        origin = new Vector2(positionX + _footOffset, positionY - spriteRendererExtentsY);
+        // Check right
+        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider)
             IsGrounded = true;
+
+        if (IsGrounded && GetComponent<Rigidbody2D>().velocity.y <= 0)
+            _jumpsRemaining = 2;
     }
 
     void UpdateSprite()
     {
         _animator.SetBool("IsGrounded", IsGrounded);
-        _animator.SetFloat("HorizontalSpeed", Mathf.Abs(_horizontal));
+        _animator.SetFloat("HorizontalSpeed", Math.Abs(_horizontal));
 
         if (_horizontal > 0)
             _spriteRenderer.flipX = false;
         else if (_horizontal < 0)
             _spriteRenderer.flipX = true;
-
     }
 }
