@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
         {
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpsRemaining--;
+
+            _audioSource.pitch = (_jumpsRemaining > 0) ? 0.8f : 1.2f;
             _audioSource.Play();
         }
 
