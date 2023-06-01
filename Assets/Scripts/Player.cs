@@ -3,26 +3,30 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    float _jumpEndTime;
     [SerializeField] float _horizontalVelocity = 3;
     [SerializeField] float _jumpVelocity = 5;
     [SerializeField] float _jumpDuration = 0.5f;
+    [SerializeField] float _footOffset = 0.5f;
     [SerializeField] Sprite _jumpSprite;
     [SerializeField] LayerMask _layerMask;
-    [SerializeField] float _footOffset = 0.5f;
 
     public bool IsGrounded;
+
     SpriteRenderer _spriteRenderer;
-    float _horizontal;
-    Animator _animator;
-    int _jumpsRemaining;
     AudioSource _audioSource;
+    Rigidbody2D _rigidbody;
+    Animator _animator;
+
+    float _jumpEndTime;
+    float _horizontal;
+    int _jumpsRemaining;
 
     void Awake()
     {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     void OnDrawGizmos()
@@ -48,9 +52,9 @@ public class Player : MonoBehaviour
         UpdateGrounding();
 
         _horizontal = Input.GetAxis("Horizontal");
-        Debug.Log(_horizontal);
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        var vertical = rb.velocity.y;
+        _rigidbody = GetComponent<Rigidbody2D>();
+
+        float vertical = _rigidbody.velocity.y;
 
         if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
         {
@@ -65,7 +69,8 @@ public class Player : MonoBehaviour
             vertical = _jumpVelocity;
 
         _horizontal *= _horizontalVelocity;
-        rb.velocity = new Vector2(_horizontal, vertical);
+        _rigidbody.velocity = new Vector2(_horizontal, vertical);
+
         UpdateSprite();
     }
 
