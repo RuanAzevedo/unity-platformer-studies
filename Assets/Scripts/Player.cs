@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] float _maxHorizontalSpeed = 5;
     [SerializeField] float _horizontalVelocity = 3;
     [SerializeField] float _jumpVelocity = 5;
     [SerializeField] float _jumpDuration = 0.5f;
     [SerializeField] float _footOffset = 0.5f;
+    [SerializeField] float _acceleration = 10;
     [SerializeField] Sprite _jumpSprite;
     [SerializeField] LayerMask _layerMask;
 
@@ -51,10 +53,8 @@ public class Player : MonoBehaviour
     {
         UpdateGrounding();
 
-        _horizontal = Input.GetAxis("Horizontal");
-        _rigidbody = GetComponent<Rigidbody2D>();
-
-        float vertical = _rigidbody.velocity.y;
+        var horizontalInput = Input.GetAxis("Horizontal");
+        var vertical = _rigidbody.velocity.y;
 
         if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
         {
@@ -68,7 +68,9 @@ public class Player : MonoBehaviour
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time)
             vertical = _jumpVelocity;
 
-        _horizontal *= _horizontalVelocity;
+        var desiredHorizontal = horizontalInput * _maxHorizontalSpeed;
+        _horizontal = Mathf.Lerp(_horizontal, desiredHorizontal, Time.deltaTime * _acceleration);
+
         _rigidbody.velocity = new Vector2(_horizontal, vertical);
 
         UpdateSprite();
