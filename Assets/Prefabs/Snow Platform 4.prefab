@@ -11,9 +11,17 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3856988c2c5d243989b80679437752df, type: 3}
+    - target: {fileID: 2493190960060519814, guid: cecc02daa1a0e4720bd4ea45f46d9f86, type: 3}
+      propertyPath: m_TagString
+      value: Snow
+      objectReference: {fileID: 0}
     - target: {fileID: 5524461425841008908, guid: cecc02daa1a0e4720bd4ea45f46d9f86, type: 3}
       propertyPath: m_Name
       value: Snow Platform 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524461425841008908, guid: cecc02daa1a0e4720bd4ea45f46d9f86, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     - target: {fileID: 5524461425841008913, guid: cecc02daa1a0e4720bd4ea45f46d9f86, type: 3}
       propertyPath: m_RootOrder
@@ -67,5 +75,9 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e1a814a2fcff74226a9aaf50beb50768, type: 3}
+    - target: {fileID: 7382858706851036584, guid: cecc02daa1a0e4720bd4ea45f46d9f86, type: 3}
+      propertyPath: m_TagString
+      value: Snow
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cecc02daa1a0e4720bd4ea45f46d9f86, type: 3}

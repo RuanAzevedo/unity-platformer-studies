@@ -783,15 +783,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ed0582f7be2438cb3ca565cef08df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxHorizontalSpeed: 5
   _horizontalVelocity: 3
   _jumpVelocity: 5
   _jumpDuration: 0.5
   _footOffset: 0.35
+  _acceleration: 10
+  _snowAcceleration: 1
   _jumpSprite: {fileID: 21300000, guid: cb07ff956555047449af18333ae3d567, type: 3}
   _layerMask:
     serializedVersion: 2
     m_Bits: 55
   IsGrounded: 0
+  IsOnSnow: 0
 --- !u!95 &678315276
 Animator:
   serializedVersion: 5
