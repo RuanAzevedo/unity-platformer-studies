@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b40f87572ed4d248ba73216f12c87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelName: Level 2
+  _levelName: Level 1
 --- !u!60 &425863820
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 73175424982af408abf29f1e5d4ccd96, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60a0aef6c08f04f8996ef9ca867af39a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
